@@ -1,0 +1,2 @@
+class NewUserDecorator < ApplicationRecord
+end
