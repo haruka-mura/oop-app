@@ -1,15 +1,13 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users
-  # GET /users.json
+
   def index
-    "create okay"
+    @user = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
+    @user = User.find(params[:id])
   end
 
   def new
@@ -18,10 +16,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_form_params)
+    @user = User.new(user_params)
 
-    if decorater.save
-      redirect_to @user_form.user, notice: "SUCCESS!"
+    if @user.save
+       UserMailer.new_user(@user).deliver_now
+      redirect_to @user, notice: "SUCCESS!"
     else
       render :new
     end
@@ -49,7 +48,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    def user_form_params
-      params.require(:user_form).permit(:name, :email, :password)
+    def user_params
+      params.require(:user).permit(:name, :email, :password)
     end
 end
