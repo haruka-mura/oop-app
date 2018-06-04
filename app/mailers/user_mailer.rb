@@ -1,6 +1,6 @@
 class UserMailer < ApplicationMailer
   def new_user(user)
     @user = user
-    mail to: "to@example.org"
+    mail to: @user.email
   end
 end

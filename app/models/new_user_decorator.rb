@@ -4,9 +4,9 @@ class NewUserDecorator
   after_save :send_mail
 
 
-  def initialize(user)
+  def initialize(user, attributes = {})
     @user = user
-    # super(attributes)
+    super(attributes)
   end
 
   def save
